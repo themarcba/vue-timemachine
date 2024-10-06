@@ -6,7 +6,7 @@ export default function useTimeMachine(initialState) {
 
   // initialize history
   const history = ref([]);
-  history.value.push(structuredClone(toRaw(initialState)));
+  history.value.push({ ...initialState });
   const historyIndex = ref(0);
 
   watch(
@@ -14,7 +14,7 @@ export default function useTimeMachine(initialState) {
     (newState) => {
       if (ignoreWatch.value) return;
       // push new state when the state has changed
-      history.value.push(structuredClone(toRaw(newState)));
+      history.value.push({ ...newState });
       historyIndex.value++;
     },
     {
