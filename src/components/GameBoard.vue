@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defineProps } from "vue";
 import GameTile from "./GameTile.vue";
 import GameFancyTile from "./GameFancyTile.vue";
 

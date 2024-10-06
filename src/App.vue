@@ -4,6 +4,10 @@ import { RouterView } from "vue-router";
 
 <template>
   <RouterView />
+  <footer>
+    With <span style="color: #ff4646"><3</span> by
+    <a href="https://x.com/themarcba">Marc Backes</a>
+  </footer>
 </template>
 
 <style>
@@ -22,5 +26,14 @@ main {
   display: flex;
   flex-direction: column;
   height: 100vh;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.8rem;
+  a {
+    color: #fff;
+  }
 }
 </style>
