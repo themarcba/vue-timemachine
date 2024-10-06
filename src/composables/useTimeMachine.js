@@ -6,7 +6,7 @@ export default function useTimeMachine(initialState) {
 
   // initialize history
   const history = ref([]);
-  history.value.push({ ...structuredClone(toRaw(initialState)), timestamp: new Date() });
+  history.value.push(structuredClone(toRaw(initialState)));
   const historyIndex = ref(0);
 
   watch(
@@ -14,7 +14,7 @@ export default function useTimeMachine(initialState) {
     (newState) => {
       if (ignoreWatch.value) return;
       // push new state when the state has changed
-      history.value.push({ ...structuredClone(toRaw(newState)), timestamp: new Date() });
+      history.value.push(structuredClone(toRaw(newState)));
       historyIndex.value++;
     },
     {
@@ -25,6 +25,9 @@ export default function useTimeMachine(initialState) {
   const moveToIndex = (index, deleteHistory) => {
     if (index < 0 && historyIndex.value === 0) {
       throw new Error("BEFORE_RECORDED_HISTORY");
+    }
+    if (index >= history.value.length) {
+      throw new Error("AFTER_RECORDED_HISTORY");
     }
     historyIndex.value = index;
     const currentState = { ...history.value[historyIndex.value] };
@@ -43,21 +46,11 @@ export default function useTimeMachine(initialState) {
   const backwards = () => moveToIndex(historyIndex.value - 1);
   const forwards = () => moveToIndex(historyIndex.value + 1);
 
-  const backInTime = (seconds) => {
-    // calculate time for maximal history
-    const targetTime = new Date(new Date() - seconds * 1000);
-    // find the index of the state that is closest to the target time
-    const index = history.value.findIndex((state) => state.timestamp > targetTime);
-    // move to the state with the index, and delete the history after
-    if (index !== -1) moveToIndex(index, true);
-  };
-
   return {
     state,
     history,
     historyIndex,
     backwards,
     forwards,
-    backInTime,
   };
 }
