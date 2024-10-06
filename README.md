@@ -1,14 +1,12 @@
-# vue-timemachine
+# Vue Time Machine ⚡️
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the code for my talk about a time machine built in Vue.js
 
-## Recommended IDE Setup
+## Additional material
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+In the talk I mentioned another talk I gave about building a time machine using JavaScript proxies.
+That talk I gave at DevWorld in Amsterdam in February 2024.
+🔗 https://www.youtube.com/watch?v=DkFJfrV5Z5w
 
 ## Project Setup
 
