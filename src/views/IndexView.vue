@@ -3,7 +3,7 @@
 <template>
   <div class="index">
     <h1>Building a Time Machine with <span class="vue">Vue</span></h1>
-    <div>
+    <div style="display: flex; gap: 1rem">
       <RouterLink to="/demo">Demo</RouterLink>
       |
       <RouterLink to="/game">Game</RouterLink>
@@ -15,7 +15,7 @@
 
 <style scoped>
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 .vue {
@@ -28,8 +28,9 @@ h1 {
   align-items: center;
   height: 100vh;
   gap: 1rem;
-  font-size: 1.5rem;
-
+  font-size: 1rem;
+  padding: 1rem;
+  line-height: 1.5;
   a {
     color: #fff;
   }
