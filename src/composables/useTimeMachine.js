@@ -1,27 +1,21 @@
-import { reactive, watch, ref, computed, toRaw } from "vue";
+import { reactive, watch, ref, toRaw } from "vue";
 
 export default function useTimeMachine(initialState) {
   const state = reactive(initialState);
   const ignoreWatch = ref(false);
 
-  const timelines = ref([{ history: [], historyIndex: 0 }]);
-  const timelineIndex = ref(0);
-  timelines.value[timelineIndex.value].history.push({
-    ...structuredClone(toRaw(initialState)),
-    timestamp: new Date(),
-  });
-
-  const history = computed(() => timelines.value[timelineIndex.value].history);
+  // initialize history
+  const history = ref([]);
+  history.value.push({ ...structuredClone(toRaw(initialState)), timestamp: new Date() });
+  const historyIndex = ref(0);
 
   watch(
     state,
     (newState) => {
       if (ignoreWatch.value) return;
-      timelines.value[timelineIndex.value].history.push({
-        ...structuredClone(toRaw(newState)),
-        timestamp: new Date(),
-      });
-      timelines.value[timelineIndex.value].historyIndex++;
+      // push new state when the state has changed
+      history.value.push({ ...structuredClone(toRaw(newState)), timestamp: new Date() });
+      historyIndex.value++;
     },
     {
       flush: "sync",
@@ -29,60 +23,41 @@ export default function useTimeMachine(initialState) {
   );
 
   const moveToIndex = (index, deleteHistory) => {
-    if (index < 0 && timelines.value[timelineIndex.value].historyIndex === 0) {
+    if (index < 0 && historyIndex.value === 0) {
       throw new Error("BEFORE_RECORDED_HISTORY");
     }
-    timelines.value[timelineIndex.value].historyIndex = index;
-    const currentState = {
-      ...structuredClone(toRaw(timelines.value[timelineIndex.value].history[index])),
-    };
+    historyIndex.value = index;
+    const currentState = { ...history.value[historyIndex.value] };
     ignoreWatch.value = true;
     for (const key in currentState) {
       state[key] = currentState[key];
     }
     ignoreWatch.value = false;
+
+    // erase the history after the current index
     if (deleteHistory) {
-      timelines.value[timelineIndex.value].history = timelines.value[
-        timelineIndex.value
-      ].history.slice(0, timelines.value[timelineIndex.value].historyIndex + 1);
+      history.value = history.value.slice(0, historyIndex.value + 1);
     }
   };
-  const backwards = () => {
-    moveToIndex(timelines.value[timelineIndex.value].historyIndex - 1);
-  };
 
-  const forwards = () => {
-    moveToIndex(timelines.value[timelineIndex.value].historyIndex + 1);
-  };
+  const backwards = () => moveToIndex(historyIndex.value - 1);
+  const forwards = () => moveToIndex(historyIndex.value + 1);
 
   const backInTime = (seconds) => {
-    const newTimeline = { ...timelines.value[timelineIndex.value] };
-    timelines.value.push(newTimeline);
-    timelineIndex.value = timelines.value.length - 1;
+    // calculate time for maximal history
     const targetTime = new Date(new Date() - seconds * 1000);
-    const index = timelines.value[timelineIndex.value].history.findIndex((history) => {
-      return history.timestamp > targetTime;
-    });
+    // find the index of the state that is closest to the target time
+    const index = history.value.findIndex((state) => state.timestamp > targetTime);
+    // move to the state with the index, and delete the history after
     if (index !== -1) moveToIndex(index, true);
-  };
-
-  const changeTimeline = (difference) => {
-    const newTimelineIndex = timelineIndex.value + difference;
-    if (newTimelineIndex < 0 || newTimelineIndex >= timelines.value.length) {
-      throw new Error("TIMELINE_DOESNT_EXIST");
-    }
-    timelineIndex.value = newTimelineIndex;
-    moveToIndex(timelines.value[timelineIndex.value].historyIndex);
   };
 
   return {
     state,
     history,
-    timelineIndex,
+    historyIndex,
     backwards,
     forwards,
     backInTime,
-    changeTimeline,
-    timelines,
   };
 }

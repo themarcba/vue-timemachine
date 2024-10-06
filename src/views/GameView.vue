@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from "vue";
 import { onKeyStroke } from "@vueuse/core";
 
@@ -19,15 +19,7 @@ const { state: gameState, move } = useGame({
   hasFoundTreasure: false,
   matrix: mapToMatrix(map),
 });
-const {
-  state: tmState,
-  backInTime,
-  changeTimeline,
-  timelineIndex,
-  backwards,
-  forwards,
-  timelines,
-} = useTimeMachine(gameState);
+const { state: tmState, backInTime, backwards, forwards } = useTimeMachine(gameState);
 const matrix = computed(() => tmState.matrix);
 const position = computed(() => ({
   x: tmState.positionX,
@@ -49,10 +41,10 @@ onKeyStroke("ArrowDown", () => move(0, 1));
       <RetroButton @click="backInTime(5)">back in time</RetroButton>
       <RetroButton @click="backwards">backwards</RetroButton>
       <RetroButton @click="forwards">forwards</RetroButton>
-      <RetroButton @click="changeTimeline(-1)"> previous timeline </RetroButton>
-      <RetroButton @click="changeTimeline(1)">next timeline</RetroButton>
+      <!-- <RetroButton @click="changeTimeline(-1)"> previous timeline </RetroButton>
+      <RetroButton @click="changeTimeline(1)">next timeline</RetroButton> -->
     </div>
-    <div class="information">Timeline: VUEJS.DE-{{ timelineIndex }}</div>
+    <!-- <div class="information">Timeline: VUEJS.DE-{{ timelineIndex }}</div> -->
   </div>
 </template>
 

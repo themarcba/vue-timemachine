@@ -7,10 +7,12 @@ const { state, history, historyIndex, backwards, forwards, backInTime } = useTim
 <template>
   <h1>Game</h1>
   <div>age: {{ state.age }}</div>
-  <button @click="state.age++">+</button>
-  <button @click="backwards()">back</button>
-  <button @click="forwards()">forwards</button>
-  <button @click="backInTime(5)">back in time 5s</button>
+  <div style="margin: 1rem 0; display: flex; gap: 1rem">
+    <button @click="state.age++">+</button>
+    <button @click="backwards()">back</button>
+    <button @click="forwards()">forwards</button>
+    <button @click="backInTime(5)">back in time 5s</button>
+  </div>
   <hr />
   Index: {{ historyIndex }}
   <pre>{{ history }}</pre>
