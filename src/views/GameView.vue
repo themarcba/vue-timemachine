@@ -10,7 +10,6 @@ import GameBoard from "@/components/GameBoard.vue";
 import GameStats from "@/components/GameStats.vue";
 import GameEnd from "@/components/GameEnd.vue";
 import useGame from "@/composables/useGame";
-import useTimeMachine from "@/composables/useTimeMachine";
 
 const { state: gameState, move } = useGame({
   health: 100,
@@ -19,14 +18,13 @@ const { state: gameState, move } = useGame({
   hasFoundTreasure: false,
   matrix: mapToMatrix(map),
 });
-const { state: tmState, backInTime, backwards, forwards } = useTimeMachine(gameState);
-const matrix = computed(() => tmState.matrix);
+const matrix = computed(() => gameState.matrix);
 const position = computed(() => ({
-  x: tmState.positionX,
-  y: tmState.positionY,
+  x: gameState.positionX,
+  y: gameState.positionY,
 }));
 
-const hasGameEnded = computed(() => tmState.health <= 0 || tmState.hasFoundTreasure);
+const hasGameEnded = computed(() => gameState.health <= 0 || gameState.hasFoundTreasure);
 onKeyStroke("ArrowRight", () => move(1, 0));
 onKeyStroke("ArrowLeft", () => move(-1, 0));
 onKeyStroke("ArrowUp", () => move(0, -1));
@@ -34,13 +32,13 @@ onKeyStroke("ArrowDown", () => move(0, 1));
 </script>
 <template>
   <div class="game">
-    <GameStats :health="tmState.health" />
+    <GameStats :health="gameState.health" />
     <GameBoard :position :matrix />
-    <GameEnd v-if="hasGameEnded" :hasWon="tmState.hasFoundTreasure" />
+    <GameEnd v-if="hasGameEnded" :hasWon="gameState.hasFoundTreasure" />
     <div class="controls">
-      <RetroButton @click="backInTime(5)">back in time</RetroButton>
+      <!-- <RetroButton @click="backInTime(5)">back in time</RetroButton>
       <RetroButton @click="backwards">backwards</RetroButton>
-      <RetroButton @click="forwards">forwards</RetroButton>
+      <RetroButton @click="forwards">forwards</RetroButton> -->
       <!-- <RetroButton @click="changeTimeline(-1)"> previous timeline </RetroButton>
       <RetroButton @click="changeTimeline(1)">next timeline</RetroButton> -->
     </div>

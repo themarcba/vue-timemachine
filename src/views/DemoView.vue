@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import useTimeMachine from "@/composables/useTimeMachine";
-const { state, history, historyIndex, backwards, forwards } = useTimeMachine({
+import { reactive } from "vue";
+const state = reactive({
   age: 37,
 });
 </script>
@@ -9,13 +9,13 @@ const { state, history, historyIndex, backwards, forwards } = useTimeMachine({
   <div>age: {{ state.age }}</div>
   <div style="margin: 1rem 0; display: flex; gap: 1rem">
     <button @click="state.age++">+</button>
-    <button @click="backwards()">backwards</button>
-    <button @click="forwards()">forwards</button>
+    <!-- <button @click="backwards()">backwards</button>
+    <button @click="forwards()">forwards</button> -->
     <!-- <button @click="backInTime(5)">back in time 5s</button> -->
   </div>
   <hr />
-  Index: {{ historyIndex }}
-  <pre>{{ history }}</pre>
+  <!-- Index: {{ historyIndex }}
+  <pre>{{ history }}</pre> -->
 </template>
 
 <style scoped>
