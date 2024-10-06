@@ -8,7 +8,7 @@
       |
       <RouterLink to="/game">Game</RouterLink>
       |
-      <RouterLink to="https://github.com/themarcba/vue-timemachine">Code</RouterLink>
+      <a href="https://github.com/themarcba/vue-timemachine">Code</a>
     </div>
   </div>
 </template>
