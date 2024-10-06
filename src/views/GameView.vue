@@ -52,7 +52,7 @@ onKeyStroke("ArrowDown", () => move(0, 1));
       <RetroButton @click="changeTimeline(-1)"> previous timeline </RetroButton>
       <RetroButton @click="changeTimeline(1)">next timeline</RetroButton>
     </div>
-    <div class="information">Timeline: VUEJS.DE-{{ timelineIndex }}</div>
+    <div class="information">Timeline: VUE-{{ timelineIndex }}</div>
   </div>
 </template>
 
