@@ -5,7 +5,7 @@ const state = reactive({
 });
 </script>
 <template>
-  <h1>Game</h1>
+  <h1>Demo</h1>
   <div>age: {{ state.age }}</div>
   <div style="margin: 1rem 0; display: flex; gap: 1rem">
     <button @click="state.age++">+</button>
