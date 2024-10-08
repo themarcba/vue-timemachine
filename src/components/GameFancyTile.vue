@@ -13,11 +13,11 @@ const contentBackgroundUrl = computed(() => {
   if (tileType.value === "OBSTACLE") return "url(/images/game-tiles/tree.png)";
   else if (tileType.value === "GRASS") return "url(/images/game-tiles/grass.png)";
   else if (tileType.value === "ROAD") return "url(/images/game-tiles/road.png)";
-  else if (tileType.value === "HAZARD") return "url(/images/game-tiles/snake.png)";
+  else if (tileType.value === "HAZARD") return "url(/images/game-tiles/snake.gif)";
   else if (tileType.value === "POTION") return "url(/images/game-tiles/potion.png)";
   else if (tileType.value === "TREASURE") return "url(/images/game-tiles/treasure.png)";
   else if (tileType.value === "INVISIBLE_HAZARD_UNCOVERED")
-    return "url(/images/game-tiles/fire.png)";
+    return "url(/images/game-tiles/fire.gif)";
   else if (props.isPlayer) return "url(/images/game-tiles/wizard.png)";
 });
 
