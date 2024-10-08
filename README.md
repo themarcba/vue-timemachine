@@ -1,6 +1,15 @@
 # Vue Time Machine ⚡️
 
 This is the code for my talk about a time machine built in Vue.js
+The game is not thrown together quickly, it's probably not well done. The focus here lies on the time machine.
+
+- [Time machine v1](https://github.com/themarcba/vue-timemachine/tree/v1)
+- [Time machine v2](https://github.com/themarcba/vue-timemachine/tree/v2)
+- [Time machine v3](https://github.com/themarcba/vue-timemachine/tree/v3)
+
+## Demo
+
+You can find a deployed demo at https://timemachine.vue3.org.
 
 ## Additional material
 
